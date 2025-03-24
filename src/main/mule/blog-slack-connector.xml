@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:slack="http://www.mulesoft.org/schema/mule/slack" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/slack http://www.mulesoft.org/schema/mule/slack/current/mule-slack.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4689a5bc-4b18-4ea5-8144-a53ff2eb11a9" >
+		<http:listener-connection protocol="HTTPS" host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="chatHistory" doc:id="683d8966-06ec-42a0-b9bd-14e84bb845cf" >
+		<http:listener doc:name="Listener" doc:id="fc4a4d47-ac61-4f49-98ca-422cbe17573f" config-ref="HTTP_Listener_config" path="/chatHistory"/>
+		<logger level="INFO" doc:name="Start Logger" doc:id="8c3ccada-14e1-486a-b13c-771316e19616" message='#["Start of flow "++(flow.name as String)]'/>
+		<logger level="INFO" doc:name="End Logger" doc:id="77d894c4-86e6-4be3-aa02-7cb4e6843266" message='#["End of flow "++(flow.name as String)]'/>
+		<slack:get-conversationshistory doc:name="Get Conversations History" doc:id="8ab2fec5-fa83-4005-a2d4-334c11fa0e6f" />
+	</flow>
+</mule>
